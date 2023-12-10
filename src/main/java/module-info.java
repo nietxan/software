@@ -1,8 +1,8 @@
-module edu.software.final_project {
+module edu.software.Application {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
-
-    opens edu.software.final_project to javafx.fxml;
-    exports edu.software.final_project;
+    opens edu.software.Application to javafx.fxml;
+    exports edu.software.Application;
 }
