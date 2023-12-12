@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d545afe-7440-40c6-88fb-cdb2f8a5188c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/software/Database/Application.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/software/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/software/Database/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/software/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/software/Application/index.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/software/Application/index.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,20 +73,12 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Application.Application">
-    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.software.Database.Application" />
-      <module name="final_project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.software.Database.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager">
     <configuration name="BarberBook" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.software.Application.BarberBook" />
       <module name="final_project" />
@@ -98,22 +92,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="db" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="edu.software.Database.Application" />
-      <module name="final_project" />
-      <option name="PROGRAM_PARAMETERS" value="$postgresql$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.db" />
-      <item itemvalue="Application.Application" />
-      <item itemvalue="Application.BarberBook" />
-    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Application" />
         <item itemvalue="Application.BarberBook" />
       </list>
     </recent_temporary>
@@ -137,7 +117,7 @@
       <workItem from="1702274022122" duration="251000" />
       <workItem from="1702274358921" duration="1129000" />
       <workItem from="1702286413118" duration="5649000" />
-      <workItem from="1702350649311" duration="654000" />
+      <workItem from="1702350649311" duration="3959000" />
     </task>
     <servers />
   </component>
