@@ -1,23 +1,24 @@
 package edu.software.Database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 // Singleton
+// TODO: Connection established but, auth failed
 public class Database {
     private static Database database;
-    private final Connection connection;
+    private Connection connection;
 
     private Database() {
         try {
-            Class.forName("java.sql.Driver");
-
-            String jdbcURL = "jdbc:postgresql://localhost:5432/barbershop";
-            String username = "barber";
-            String password = "qwerty123";
+            String jdbcURL = "jdbc:postgresql://localhost:5432/soft_db";
+            String username = "soft_admin";
+            String password = "admin";
 
             connection = DriverManager.getConnection(jdbcURL, username, password);
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -28,17 +29,7 @@ public class Database {
         return database;
     }
 
-    public void execute(String query) throws SQLException {
-        if (connection == null) {
-            throw new SQLException("Connection not established");
-        }
-
-        PreparedStatement statement = connection.prepareStatement(query);
-
-        ResultSet resultSet = statement.executeQuery();
-
-        while (resultSet.next()) {
-            System.out.println(resultSet.getInt(0) + " " + resultSet.getString(1));
-        }
+    public Connection getConnection() {
+        return connection;
     }
 }
