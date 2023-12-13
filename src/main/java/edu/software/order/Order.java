@@ -1,4 +1,4 @@
-package edu.software.Order;
+package edu.software.order;
 
 public interface Order {
     String description();

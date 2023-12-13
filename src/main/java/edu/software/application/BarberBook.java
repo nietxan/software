@@ -1,6 +1,5 @@
-package edu.software.Application;
+package edu.software.application;
 
-import edu.software.Database.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

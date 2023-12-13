@@ -1,6 +1,6 @@
-package edu.software.Record;
+package edu.software.record;
 
-import edu.software.Order.Order;
+import edu.software.order.Order;
 
 import java.sql.Date;
 

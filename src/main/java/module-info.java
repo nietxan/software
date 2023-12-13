@@ -4,6 +4,6 @@ module edu.software.Application {
     requires java.sql;
     requires org.jetbrains.annotations;
 
-    opens edu.software.Application to javafx.fxml;
-    exports edu.software.Application;
+    opens edu.software.application to javafx.fxml;
+    exports edu.software.application;
 }

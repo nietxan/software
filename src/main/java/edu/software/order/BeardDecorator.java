@@ -1,7 +1,7 @@
-package edu.software.Order;
+package edu.software.order;
 
-public class HairDecorator extends BaseDecorator {
-    public HairDecorator(Order order) {
+public class BeardDecorator extends BaseDecorator {
+    public BeardDecorator(Order order) {
         super(order);
     }
 
