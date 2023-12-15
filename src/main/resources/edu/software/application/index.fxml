@@ -1,48 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Scene?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.image.ImageView?>
-<Scene xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-    <root>
-        <AnchorPane prefHeight="439.0" prefWidth="798.0" style="-fx-background-color: TRANSPARENT;">
-            <children>
-                <ImageView fitHeight="444.0" fitWidth="800.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="1.jpeg" />
-                    </image>
-                </ImageView>
-                <Button fx:id="ongoings" layoutX="660.0" layoutY="368.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: TRANSPARENT; -fx-border-insets: 0.1; -fx-background-radius: 50;" text="Book Now" textAlignment="CENTER" textFill="WHITE">
-                    <font>
-                        <Font name="Sama Tamil Regular" size="13.0" />
-                    </font></Button>
-                <Button fx:id="contact" layoutX="459.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Contact us" textAlignment="CENTER" textFill="WHITE">
-                    <font>
-                        <Font name="Arial" size="13.0" />
-                    </font></Button>
-                <Button fx:id="leave_page" layoutX="695.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-font-weight: BOLD;" text="Leave Page" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-                    <font>
-                        <Font name="Arial Bold" size="13.0" />
-                    </font></Button>
-                <Button fx:id="films" layoutX="370.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: transperency;" text="Barbershops" textAlignment="CENTER" textFill="WHITE" textOverrun="LEADING_WORD_ELLIPSIS">
-                    <font>
-                        <Font name="Arial" size="13.0" />
-                    </font></Button>
-                <Button fx:id="announ" layoutX="-11.0" layoutY="-7.0" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT;" text="BarberBook" textFill="WHITE">
-                    <font>
-                        <Font name="Tiro Gurmukhi" size="39.0" />
-                    </font></Button>
-                <Button fx:id="films1" layoutX="297.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: transperency;" text="Services" textAlignment="CENTER" textFill="WHITE" textOverrun="LEADING_WORD_ELLIPSIS">
-                    <font>
-                        <Font name="Arial" size="13.0" />
-                    </font>
-                </Button>
-            </children>
-        </AnchorPane>
-    </root>
-</Scene>
+<AnchorPane>
+
+</AnchorPane>
