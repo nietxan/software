@@ -1,4 +1,4 @@
-module edu.software.Application {
+module edu.software.application {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

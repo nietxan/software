@@ -7,9 +7,7 @@ public class RecordUpdater {
 
     private final Map<Update, Object[]> updateList = new HashMap<>();
 
-    // First param is Update receiver object,
-    // second 'Record' that will be updated,
-    // rest params are 'Record' properties that will be updated
+    // Big f issue
     public void addUpdate(Update update, Object... args) {
         updateList.put(update, args);
     }

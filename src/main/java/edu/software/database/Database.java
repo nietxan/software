@@ -7,6 +7,8 @@ import edu.software.record.User;
 import edu.software.updater.Update;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Singleton
 public class Database implements Update {
@@ -67,6 +69,59 @@ public class Database implements Update {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<Barber> getBarberList() {
+        List<Barber> barberList = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM barbers");
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                barberList.add(new Barber(
+                        set.getInt(1),
+                        set.getString(2),
+                        set.getString(3)
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return barberList;
+    }
+
+    public int getLastUserId() {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1"
+            );
+            ResultSet set = statement.executeQuery();
+
+            if (set.next()) {
+                return set.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getLastRecordId() {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT record_id FROM records ORDER BY record_id DESC LIMIT 1"
+            );
+            ResultSet set = statement.executeQuery();
+
+            if (set.next()) {
+                return set.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return 0;
     }
 
     @Override
