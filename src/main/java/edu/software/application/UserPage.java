@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class User {
+public class UserPage {
     // List view of user
 
     @FXML

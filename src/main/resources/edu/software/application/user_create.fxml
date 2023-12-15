@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      fx:controller="edu.software.application.UserCreate"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <TextField fx:id="phoneNumber" layoutX="250.0" layoutY="120.0" text="+7"/>
+    <TextField fx:id="username" layoutX="250.0" layoutY="160.0" promptText="Username"/>
+    <PasswordField fx:id="password" layoutX="250.0" layoutY="200.0" promptText="Password"/>
+    <Button onAction="#confirm" layoutX="250.0" layoutY="240.0" mnemonicParsing="false" text="Confirm"/>
+</Pane>

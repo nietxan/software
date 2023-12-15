@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.software.application.UserAuth">
+    <TextField fx:id="username" layoutX="250.0" layoutY="120.0" promptText="Username" />
+    <PasswordField fx:id="password" layoutX="250.0" layoutY="160.0" promptText="Password" />
+    <Button layoutX="250.0" layoutY="200.0" mnemonicParsing="false" onAction="#signIn" text="Sing in" />
+    <Button layoutX="500.0" layoutY="20.0" mnemonicParsing="false" onAction="#signUp" text="Sing up" />
+    <TextArea fx:id="note" editable="false" layoutX="250.0" layoutY="240.0" prefHeight="25.0" prefWidth="150.0"/>
+</Pane>

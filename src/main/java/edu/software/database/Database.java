@@ -35,7 +35,7 @@ public class Database implements Update {
     }
 
     public void insertUser(User user) {
-        String query = String.format("INSERT INTO users VALUES (%d, %s, %s, %s)",
+        String query = String.format("INSERT INTO users VALUES (%d, '%s', '%s', '%s')",
                 user.id(),
                 user.name(),
                 user.phoneNumber(),
@@ -56,7 +56,7 @@ public class Database implements Update {
         Order order = record.order();
         Date date = record.date();
 
-        String query = String.format("INSERT INTO records VALUES (%s, %s, %s, %s)",
+        String query = String.format("INSERT INTO records VALUES (%d, '%s', '%s', '%s')",
                 user.id(),
                 barber.id(),
                 order.description(),
@@ -122,6 +122,31 @@ public class Database implements Update {
         }
 
         return 0;
+    }
+
+    public int checkUser(String username, String password) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT user_password FROM users WHERE user_name = '%s'", username)
+            );
+
+            ResultSet set = statement.executeQuery();
+
+            if (set.next()) {
+                String str = set.getString(1);
+
+                if (str.equals(password)) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return -1;
     }
 
     @Override
