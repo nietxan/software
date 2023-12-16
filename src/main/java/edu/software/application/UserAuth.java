@@ -61,7 +61,7 @@ public class UserAuth {
     private void signUp(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("user_create.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("add_user.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.show();

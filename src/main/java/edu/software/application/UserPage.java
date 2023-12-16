@@ -13,7 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,15 +22,14 @@ import java.util.ArrayList;
 public class UserPage {
     Database database = Database.getDatabase();
 
+    private User user;
+
     public void initialize(User user) {
         ObservableList<Button> list = FXCollections.observableList(new ArrayList<>());
 
         for (Record record : database.getRecordList(user)) {
-            TextArea area = new TextArea();
-            area.setPrefRowCount(1);
-            area.setEditable(false);
+            Text area = new Text();
             area.setText(String.valueOf(record));
-            area.autosize();
 
             Button button = new Button();
             button.setText("Edit");
@@ -57,6 +56,7 @@ public class UserPage {
         }
 
         records.setItems(list);
+        this.user = user;
     }
 
     @FXML
@@ -67,7 +67,12 @@ public class UserPage {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("add_record.fxml"));
-        Scene scene = new Scene(loader.load());
+        Parent parent = loader.load();
+
+        AddRecord addRecord = loader.getController();
+        addRecord.initialize(this.user);
+
+        Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
     }

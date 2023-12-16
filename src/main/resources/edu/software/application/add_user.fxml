@@ -5,7 +5,7 @@
 
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      fx:controller="edu.software.application.UserCreate"
+      fx:controller="edu.software.application.AddUser"
       prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <TextField fx:id="phoneNumber" layoutX="250.0" layoutY="120.0" text="+7"/>
     <TextField fx:id="username" layoutX="250.0" layoutY="160.0" promptText="Username"/>

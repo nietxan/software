@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class UserCreate {
+public class AddUser {
 
     Database database = Database.getDatabase();
 
