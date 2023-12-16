@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.software.application.UserPage">
+   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#home" text="Home" />
+   <TextArea fx:id="text" layoutX="100.0" layoutY="100.0" prefHeight="40.0" prefWidth="100.0" />
+   <Button layoutX="100.0" layoutY="150.0" mnemonicParsing="false" onAction="#check" text="Button" />
+</Pane>

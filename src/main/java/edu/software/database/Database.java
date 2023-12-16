@@ -149,6 +149,49 @@ public class Database implements Update {
         return -1;
     }
 
+    public int checkBarber(String username, String password) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT barber_password FROM barbers WHERE barber_name = '%s'", username)
+            );
+
+            ResultSet set = statement.executeQuery();
+
+            if (set.next()) {
+                String str = set.getString(1);
+
+                if (str.equals(password)) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return -1;
+    }
+
+    public User getUser(String username) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT * FROM users WHERE user_name = '%s'", username)
+            );
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return new User(
+                        set.getInt(1), set.getString(2),
+                        set.getString(3), set.getString(4)
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     @Override
     public void update(Object... args) {
         Record record = (Record) args[0];

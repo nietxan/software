@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
@@ -14,11 +13,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class UserAuth {
+public class BarberAuth {
+
     Database database = Database.getDatabase();
 
     @FXML
-    private TextField username;
+    private TextField barber;
 
     @FXML
     private PasswordField password;
@@ -27,17 +27,14 @@ public class UserAuth {
     private TextArea note;
 
     @FXML
-    private void signIn(ActionEvent event) throws IOException {
+    private void singIn(ActionEvent event) throws IOException {
 
-        switch (database.checkUser(username.getText(), password.getText())) {
+        switch (database.checkBarber(barber.getText(), password.getText())) {
             case 0: {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("user_page.fxml"));
-                Parent parent = loader.load();
-                UserPage page = loader.getController();
-                page.initialize(database.getUser(username.getText()));
-                Scene scene = new Scene(parent);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("barber_page.fxml"));
+                Scene scene = new Scene(loader.load());
                 stage.setScene(scene);
                 stage.show();
                 break;
@@ -53,16 +50,5 @@ public class UserAuth {
                 break;
             }
         }
-
-    }
-
-    @FXML
-    private void signUp(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("user_create.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
-        stage.show();
     }
 }

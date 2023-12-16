@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:controller="edu.software.application.Homepage" prefHeight="400.0" prefWidth="600.0"
-      xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-    <Button onAction="#book" layoutX="260.0" layoutY="200.0" mnemonicParsing="false" text="Button"/>
-</Pane>
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.software.application.Homepage">
+    <Button alignment="CENTER" mnemonicParsing="false" onAction="#book" text="Book Now" textAlignment="CENTER">
+      <VBox.margin>
+         <Insets left="255.0" right="255.0" top="200.0" />
+      </VBox.margin></Button>
+   <Button mnemonicParsing="false" onAction="#barber" text="Barber Page">
+      <VBox.margin>
+         <Insets left="480.0" top="-210.0" />
+      </VBox.margin>
+   </Button>
+</VBox>

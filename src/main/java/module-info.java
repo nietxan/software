@@ -5,4 +5,5 @@ module application {
 
     opens edu.software.application to javafx.fxml;
     exports edu.software.application;
+    exports edu.software.record;
 }
