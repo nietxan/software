@@ -1,5 +1,6 @@
 package edu.software.application;
 
+import edu.software.record.Barber;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class BarberPage {
+    private Barber barber;
+
+    public void initialize(Barber barber) {
+        this.barber = barber;
+    }
 
     @FXML
     private void home(ActionEvent event) throws IOException {

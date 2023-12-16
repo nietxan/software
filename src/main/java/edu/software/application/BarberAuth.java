@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
@@ -18,7 +19,7 @@ public class BarberAuth {
     Database database = Database.getDatabase();
 
     @FXML
-    private TextField barber;
+    private TextField barber_name;
 
     @FXML
     private PasswordField password;
@@ -29,12 +30,16 @@ public class BarberAuth {
     @FXML
     private void singIn(ActionEvent event) throws IOException {
 
-        switch (database.checkBarber(barber.getText(), password.getText())) {
+        switch (database.checkBarber(barber_name.getText(), password.getText())) {
             case 0: {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("barber_page.fxml"));
-                Scene scene = new Scene(loader.load());
+                Parent parent = loader.load();
+                BarberPage page = loader.getController();
+                page.initialize(database.getBarber(barber_name.getText()));
+
+                Scene scene = new Scene(parent);
                 stage.setScene(scene);
                 stage.show();
                 break;

@@ -37,6 +37,7 @@ public class UserAuth {
                 Parent parent = loader.load();
                 UserPage page = loader.getController();
                 page.initialize(database.getUser(username.getText()));
+
                 Scene scene = new Scene(parent);
                 stage.setScene(scene);
                 stage.show();

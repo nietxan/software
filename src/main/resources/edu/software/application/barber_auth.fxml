@@ -10,7 +10,7 @@
          <HBox.margin>
             <Insets bottom="150.0" left="100.0" right="245.0" top="150.0"/>
          </HBox.margin>
-         <TextField fx:id="barber" promptText="Username">
+         <TextField fx:id="barber_name" promptText="Username">
             <VBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </VBox.margin>

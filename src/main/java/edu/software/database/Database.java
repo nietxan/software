@@ -1,10 +1,13 @@
 package edu.software.database;
 
+import edu.software.order.BaseOrder;
 import edu.software.order.Order;
 import edu.software.record.Barber;
 import edu.software.record.Record;
 import edu.software.record.User;
 import edu.software.updater.Update;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -89,6 +92,51 @@ public class Database implements Update {
         }
 
         return barberList;
+    }
+
+    public List<Record> getRecordList(User user) {
+        List<Record> recordList = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT * FROM records WHERE user_id = '%s'", user.id())
+            );
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                recordList.add(
+                    new Record(
+                            set.getInt(1),
+                            user,
+                            getBarber(set.getInt(1)),
+                            new BaseOrder(set.getString(4), set.getFloat(5)),
+                            set.getDate(6)
+                    )
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return recordList;
+    }
+
+    public Barber getBarber(int record_id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT * FROM barbers b JOIN records r USING(barber_id) WHERE r.record_id = %d", record_id)
+            );
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return new Barber(
+                        set.getInt(1),
+                        set.getString(2),
+                        set.getString(3)
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     public int getLastUserId() {
@@ -184,6 +232,24 @@ public class Database implements Update {
                 return new User(
                         set.getInt(1), set.getString(2),
                         set.getString(3), set.getString(4)
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public Barber getBarber(String barber_name) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT * FROM barbers WHERE barber_name = '%s'", barber_name)
+            );
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return new Barber(
+                        set.getInt(1), set.getString(2),
+                        set.getString(3)
                 );
             }
         } catch (SQLException e) {
