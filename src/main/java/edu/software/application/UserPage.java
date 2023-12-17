@@ -70,7 +70,7 @@ public class UserPage {
         Parent parent = loader.load();
 
         AddRecord addRecord = loader.getController();
-        addRecord.initialize(this.user);
+        addRecord.initialize();
 
         Scene scene = new Scene(parent);
         stage.setScene(scene);

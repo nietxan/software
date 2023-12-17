@@ -7,7 +7,7 @@ public class BeardDecorator extends BaseDecorator {
 
     @Override
     public String description() {
-        return order.description();
+        return order.description() + " + beard";
     }
 
     @Override

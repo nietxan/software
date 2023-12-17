@@ -120,6 +120,33 @@ public class Database implements Update {
         return recordList;
     }
 
+    // For AddRecord
+    public List<Record> getRecordList() {
+        List<Record> recordList = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM records"
+            );
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                recordList.add(
+                        new Record(
+                                null,
+                                null,
+                                null,
+                                null,
+                                set.getDate(6)
+                        )
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return recordList;
+    }
+
     public Barber getBarber(int record_id) {
         try {
             PreparedStatement statement = connection.prepareStatement(

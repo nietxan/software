@@ -7,7 +7,7 @@ public class HairCareDecorator extends BaseDecorator {
 
     @Override
     public String description() {
-        return order.description();
+        return order.description() + " + hair care";
     }
 
     @Override
