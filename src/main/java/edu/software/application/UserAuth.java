@@ -66,4 +66,14 @@ public class UserAuth {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    private void home(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+        stage.show();
+    }
 }

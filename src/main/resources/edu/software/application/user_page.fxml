@@ -2,23 +2,51 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.software.application.UserPage">
    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#home" text="Home">
       <VBox.margin>
          <Insets left="5.0" top="5.0" />
-      </VBox.margin></Button>
-
-   <Pane>
-      <ListView fx:id="records" prefHeight="300.0" prefWidth="580.0" />
-      <VBox.margin>
-         <Insets left="10.0" right="10.0" top="15.0" />
       </VBox.margin>
-   </Pane>
+   </Button>
+
+   <TableView fx:id="records" prefHeight="310.0">
+      <columns>
+         <TableColumn editable="false" prefWidth="109.0" sortable="false" text="Barber">
+            <cellValueFactory>
+               <PropertyValueFactory property="barber" />
+            </cellValueFactory>
+         </TableColumn>
+
+         <TableColumn editable="false" prefWidth="247.0" sortable="false" text="Order Description">
+            <cellValueFactory>
+               <PropertyValueFactory property="description" />
+            </cellValueFactory>
+         </TableColumn>
+
+         <TableColumn editable="false" prefWidth="81.0" sortable="false" text="Order Cost">
+            <cellValueFactory>
+               <PropertyValueFactory property="cost" />
+            </cellValueFactory>
+         </TableColumn>
+
+         <TableColumn editable="false" maxWidth="152.0" prefWidth="152.0" sortable="false" text="Date">
+            <cellValueFactory>
+               <PropertyValueFactory property="date" />
+            </cellValueFactory>
+         </TableColumn>
+      </columns>
+
+      <VBox.margin>
+         <Insets left="5.0" right="5.0" top="10.0" />
+      </VBox.margin>
+   </TableView>
 
    <Button mnemonicParsing="false" onAction="#addRecord" text="addRecord">
       <VBox.margin>
-         <Insets left="265.0" top="10.0" />
-      </VBox.margin></Button>
+         <Insets left="255.0" top="10.0" />
+      </VBox.margin>
+   </Button>
 </VBox>

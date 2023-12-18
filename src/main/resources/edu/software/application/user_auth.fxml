@@ -5,36 +5,28 @@
 <?import javafx.scene.layout.*?>
 
 <Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.software.application.UserAuth">
-    <HBox>
-        <VBox>
-            <HBox.margin>
-                <Insets bottom="150.0" left="100.0" right="245.0" top="150.0"/>
-            </HBox.margin>
-            <TextField fx:id="username" promptText="Username">
-              <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-              </VBox.margin>
-            </TextField>
-            <PasswordField fx:id="password" promptText="Password">
-              <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0"/>
-              </VBox.margin>
-            </PasswordField>
-            <TextArea fx:id="note" editable="false" prefHeight="25.0" prefWidth="150.0">
-              <VBox.margin>
-                  <Insets left="10.0" right="10.0"/>
-              </VBox.margin>
-            </TextArea>
-            <Button mnemonicParsing="false" onAction="#signIn" text="Sing in">
-              <VBox.margin>
-                  <Insets bottom="10.0" left="50.0" top="10.0"/>
-              </VBox.margin>
-            </Button>
-        </VBox>
-        <Button mnemonicParsing="false" onAction="#signUp" text="Sing up">
-          <HBox.margin>
-              <Insets right="10.0" top="10.0"/>
-          </HBox.margin>
-        </Button>
-    </HBox>
+     <Button layoutX="525.0" layoutY="10.0" mnemonicParsing="false" onAction="#signUp" text="Sing up" />
+   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#home" text="Home" />
+     <VBox layoutX="120.0" layoutY="120.0">
+         <TextField fx:id="username" promptText="Username">
+           <VBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+           </VBox.margin>
+         </TextField>
+         <PasswordField fx:id="password" promptText="Password">
+           <VBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" />
+           </VBox.margin>
+         </PasswordField>
+         <TextArea fx:id="note" editable="false" prefHeight="25.0" prefWidth="150.0">
+           <VBox.margin>
+               <Insets left="10.0" right="10.0" />
+           </VBox.margin>
+         </TextArea>
+         <Button mnemonicParsing="false" onAction="#signIn" text="Sing in">
+           <VBox.margin>
+               <Insets bottom="10.0" left="50.0" top="10.0" />
+           </VBox.margin>
+         </Button>
+     </VBox>
 </Pane>

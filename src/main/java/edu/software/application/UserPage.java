@@ -11,13 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class UserPage {
     Database database = Database.getDatabase();
@@ -25,42 +22,15 @@ public class UserPage {
     private User user;
 
     public void initialize(User user) {
-        ObservableList<Button> list = FXCollections.observableList(new ArrayList<>());
-
-        for (Record record : database.getRecordList(user)) {
-            Text area = new Text();
-            area.setText(String.valueOf(record));
-
-            Button button = new Button();
-            button.setText("Edit");
-            button.setGraphic(area);
-            button.setOnAction(event -> {
-                try {
-                    Stage stage = new Stage();
-
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("update_record.fxml"));
-                    Parent parent = loader.load();
-
-                    UpdateRecord updateRecord = loader.getController();
-                    updateRecord.initialize(record);
-
-                    Scene scene = new Scene(parent);
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-            list.add(button);
-        }
+        ObservableList<Record> list = FXCollections.observableList(database.getRecordList(user));
 
         records.setItems(list);
+
         this.user = user;
     }
 
     @FXML
-    private ListView<Button> records;
+    private TableView<Record> records;
 
     @FXML
     private void addRecord(ActionEvent event) throws IOException {

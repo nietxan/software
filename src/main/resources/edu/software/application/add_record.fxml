@@ -4,9 +4,10 @@
 <?import javafx.scene.layout.*?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.software.application.AddRecord">
-   <Button fx:id="barber_choice" layoutX="150.0" layoutY="150.0" mnemonicParsing="false" onAction="#barberChoose" text="Barber" />
-   <DatePicker fx:id="date_picker" layoutX="100.0" layoutY="250.0" />
-   <Button onAction="#pickTime" text="time" layoutX="100.0" layoutY="280.0"/>
-   <Button layoutX="400.0" layoutY="250.0" mnemonicParsing="false" onAction="#makeOrder" text="Order" />
-   <Button layoutX="250.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirm" text="Confirm" />
+   <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#home" text="Home" />
+   <Button fx:id="barber_choice" layoutX="425.0" layoutY="100.0" mnemonicParsing="false" onAction="#barberChoose" text="Barber" />
+   <Button layoutX="425.0" layoutY="135.0" mnemonicParsing="false" onAction="#makeOrder" text="Order" />
+   <DatePicker fx:id="date_picker" layoutX="50.0" layoutY="100.0" />
+   <Button layoutX="250.0" layoutY="100.0" onAction="#pickTime" text="Time" />
+   <Button layoutX="270.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirm" text="Confirm" />
 </Pane>
