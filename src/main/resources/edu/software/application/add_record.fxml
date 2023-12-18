@@ -5,7 +5,8 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.software.application.AddRecord">
    <Button fx:id="barber_choice" layoutX="150.0" layoutY="150.0" mnemonicParsing="false" onAction="#barberChoose" text="Barber" />
-   <DatePicker fx:id="date" layoutX="100.0" layoutY="250.0" />
+   <DatePicker fx:id="date_picker" layoutX="100.0" layoutY="250.0" />
+   <Button onAction="#pickTime" text="time" layoutX="100.0" layoutY="280.0"/>
    <Button layoutX="400.0" layoutY="250.0" mnemonicParsing="false" onAction="#makeOrder" text="Order" />
    <Button layoutX="250.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirm" text="Confirm" />
 </Pane>

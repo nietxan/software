@@ -2,9 +2,9 @@ package edu.software.record;
 
 import edu.software.order.Order;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
-public record Record(Integer id, User user, Barber barber, Order order, Date date) {
+public record Record(Integer id, User user, Barber barber, Order order, Timestamp date) {
     @Override
     public String toString() {
         return  barber.name() + ' ' +

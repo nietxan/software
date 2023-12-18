@@ -6,10 +6,10 @@ import edu.software.record.Barber;
 import edu.software.record.Record;
 import edu.software.record.User;
 import edu.software.updater.Update;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,13 +57,15 @@ public class Database implements Update {
         User user = record.user();
         Barber barber = record.barber();
         Order order = record.order();
-        Date date = record.date();
+        Timestamp date = record.date();
 
-        String query = String.format("INSERT INTO records VALUES (%d, '%s', '%s', '%s')",
+        String query = String.format("INSERT INTO records VALUES (%d, %d, %d, '%s', %f, '%s')",
+                record.id(),
                 user.id(),
                 barber.id(),
                 order.description(),
-                date.toString()
+                order.cost(),
+                date
         );
 
         try {
@@ -109,35 +111,8 @@ public class Database implements Update {
                             user,
                             getBarber(set.getInt(1)),
                             new BaseOrder(set.getString(4), set.getFloat(5)),
-                            set.getDate(6)
+                            set.getTimestamp(6)
                     )
-                );
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return recordList;
-    }
-
-    // For AddRecord
-    public List<Record> getRecordList() {
-        List<Record> recordList = new ArrayList<>();
-
-        try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM records"
-            );
-            ResultSet set = statement.executeQuery();
-            while (set.next()) {
-                recordList.add(
-                        new Record(
-                                null,
-                                null,
-                                null,
-                                null,
-                                set.getDate(6)
-                        )
                 );
             }
         } catch (SQLException e) {
@@ -283,6 +258,29 @@ public class Database implements Update {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public List<Integer> getRecordsTimeOfDay(LocalDate date) {
+        List<Integer> timeList = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format(
+                            "SELECT extract(hour from date) AS h " +
+                            "FROM records WHERE DATE(date) = '%s' ORDER BY h",
+                            date.format(DateTimeFormatter.ISO_DATE)
+                    )
+            );
+
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                timeList.add(set.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return timeList;
     }
 
     @Override

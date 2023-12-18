@@ -4,56 +4,87 @@ import edu.software.database.Database;
 import edu.software.order.*;
 import edu.software.record.Barber;
 import edu.software.record.Record;
+import edu.software.record.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class AddRecord {
     Database database = Database.getDatabase();
 
-    public void initialize() {
-        List<Record> recordList = database.getRecordList();
+    private User user;
+    private Barber barber;
+    private Order order;
+    private Timestamp date;
 
-        date.setDayCellFactory(
-                new Callback<>() {
-                    @Override
-                    public DateCell call(DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate date, boolean empty) {
-                                super.updateItem(date, empty);
-
-                                for (Record record : recordList) {
-                                    if (date.isEqual(record.date().toLocalDate())) {
-                                        setDisable(true);
-                                        setStyle("-fx-background-color: #ffc0cb");
-                                    }
-                                }
-                            }
-                        };
-                    }
-                }
-        );
+    public void initialize(User user) {
+        this.user = user;
     }
 
-    private Order order;
-    private Barber barber;
+
+    @FXML
+    private DatePicker date_picker;
+
+    @FXML
+    private void pickTime() {
+        LocalDate date = date_picker.getValue();
+
+        if (date == null) {
+            return;
+        }
+
+        Stage stage = new Stage();
+
+        VBox vBox = new VBox();
+
+        List<Integer> timeList = database.getRecordsTimeOfDay(date);
+
+        HBox hBox = new HBox();
+
+        for (int i = 10; i <= 21; i++) {
+            Button button = new Button();
+            button.setText(String.format("%d:00", i));
+            button.setOnAction(event -> {
+                this.date = Timestamp.valueOf(String.format("%s %s:00", date.format(DateTimeFormatter.ISO_DATE), button.getText()));
+                stage.hide();
+            });
+
+            if (timeList.contains(i)) {
+                button.setStyle("-fx-background-color: tomato");
+                button.setDisable(true);
+            }
+
+            if (hBox.getChildren().size() == 4) {
+                vBox.getChildren().add(hBox);
+                hBox = new HBox();
+            }
+
+            hBox.getChildren().add(button);
+        }
+
+        stage.setScene(new Scene(vBox));
+        stage.show();
+    }
 
     @FXML
     private Button barber_choice;
-
-    @FXML
-    private DatePicker date;
 
     @FXML
     private void barberChoose() {
@@ -65,6 +96,8 @@ public class AddRecord {
 
         for (Barber barber : barberList) {
             Button button = new Button();
+            button.setLayoutY(10);
+            button.setPrefSize(80, 30);
             button.setText(barber.name());
             button.setOnAction(event -> {
                 barber_choice.setText(barber.name());
@@ -75,7 +108,8 @@ public class AddRecord {
             vBox.getChildren().add(button);
         }
 
-        Scene scene = new Scene(vBox);
+        vBox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(vBox, 200, 200);
         stage.setScene(scene);
         stage.show();
     }
@@ -86,25 +120,25 @@ public class AddRecord {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("make_order.fxml"));
         Parent parent = loader.load();
-        MakeOrder makeOrder = loader.getController();
-        Button confirm = makeOrder.confirm;
+
+        Button confirm = (Button) parent.lookup("#confirm");
         confirm.setOnAction(event -> {
-            Order order = new BaseOrder(((TextField)parent.lookup("#description")).getText(), 0f);
+            Order order = new BaseOrder(((TextField) parent.lookup("#description")).getText(), 200f);
 
-            for (Node node : parent.getChildrenUnmodifiable()) {
-                if (node instanceof CheckBox checkBox) {
-                    if (checkBox.isSelected()) {
-                        if (checkBox.getText().equals("Hair")) {
-                            order = new HairDecorator(order);
-                        }
+            HBox hBox = (HBox) parent.lookup("#box");
 
-                        else if (checkBox.getText().equals("Beard")) {
-                            order = new BeardDecorator(order);
-                        }
+            for (Node node : hBox.getChildrenUnmodifiable()) {
+                if (node instanceof CheckBox checkBox && checkBox.isSelected()) {
+                    if (checkBox.getText().equals("Hair")) {
+                        order = new HairDecorator(order);
+                    }
 
-                        else if (checkBox.getText().equals("Hair Care")) {
-                            order = new HairCareDecorator(order);
-                        }
+                    else if (checkBox.getText().equals("Beard")) {
+                        order = new BeardDecorator(order);
+                    }
+
+                    else if (checkBox.getText().equals("Hair Care")) {
+                        order = new HairCareDecorator(order);
                     }
                 }
             }
@@ -119,7 +153,21 @@ public class AddRecord {
     }
 
     @FXML
-    private void confirm() {
-        System.out.println(order.description());
+    private void confirm(ActionEvent event) throws IOException {
+        Record record = new Record(
+                database.getLastRecordId() + 1,
+                this.user,
+                this.barber,
+                this.order,
+                this.date
+        );
+
+        database.insertRecord(record);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+
     }
 }

@@ -12,6 +12,6 @@ public class HairDecorator extends BaseDecorator {
 
     @Override
     public Float cost() {
-        return order.cost();
+        return order.cost() + 100f;
     }
 }
