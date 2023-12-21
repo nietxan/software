@@ -6,6 +6,8 @@ import edu.software.record.Record;
 import edu.software.record.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -20,7 +22,7 @@ public class UpdateRecord extends AddRecord {
 
     Database database = Database.getDatabase();
 
-    private Record save;
+    private Record record;
 
     private final List<Receiver> receiverList = new ArrayList<>();
 
@@ -38,8 +40,7 @@ public class UpdateRecord extends AddRecord {
 
         super.initialize(user);
 
-        this.save = record;
-        database.deleteRecord(record);
+        this.record = record;
     }
 
     @Override
@@ -47,28 +48,49 @@ public class UpdateRecord extends AddRecord {
 
         receiverList.add(database);
 
+        Stage barberPage = new Stage();
+
         for (Window window : Stage.getWindows()) if (window instanceof Stage stage) {
             if (stage.getTitle().equals("Barber Page")) {
-                // need to add controller Barber Page
+                barberPage = stage;
             }
         }
 
+        barberPage.hide();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("barber_page.fxml"));
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        BarberPage page = loader.getController();
+        receiverList.add(page);
+
+        Record record = new Record(
+                this.record.id(),
+                super.user,
+                super.barber,
+                super.order,
+                super.date
+        );
+
         for (Receiver receiver : receiverList) {
-            receiver.update(new Record(
-                    save.id(),
-                    super.user,
-                    super.barber,
-                    super.order,
-                    super.date
-            ));
+            receiver.update(record);
         }
 
-        super.confirm(event);
+        stage.setTitle("Barber Page");
+        stage.show();
+
+        Stage current = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        loader = new FXMLLoader(getClass().getResource("user_page.fxml"));
+        Parent parent = loader.load();
+        UserPage userPage = loader.getController();
+        userPage.initialize(super.user);
+        current.setScene(new Scene(parent));
+        current.show();
     }
 
     @Override
     protected void home(ActionEvent event) throws IOException {
-        database.insertRecord(save);
         super.home(event);
     }
 }

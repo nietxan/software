@@ -341,6 +341,20 @@ public class Database implements Receiver {
 
     @Override
     public void update(Record record) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format(
+                            "UPDATE records SET barber_id = %d, order_description = '%s', order_cost = %f, date = '%s' WHERE record_id = %d",
+                            record.barber().id(),
+                            record.order().description(),
+                            record.order().cost(),
+                            record.date(),
+                            record.id()
+                    )
+            );
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

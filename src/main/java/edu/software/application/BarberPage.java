@@ -21,14 +21,10 @@ public class BarberPage implements Receiver {
 
     Database database = Database.getDatabase();
 
-    private Barber barber;
-
     public void initialize(Barber barber) {
         ObservableList<Record> list = FXCollections.observableList(database.getRecordList(barber));
 
         records.setItems(list);
-
-        this.barber = barber;
     }
 
     @FXML
@@ -51,7 +47,7 @@ public class BarberPage implements Receiver {
                 .text("Record: " + record + " has changed!")
                 .showInformation();
 
-        ObservableList<Record> list = FXCollections.observableList(database.getRecordList(barber));
+        ObservableList<Record> list = FXCollections.observableList(database.getRecordList(record.barber()));
 
         records.setItems(list);
     }
