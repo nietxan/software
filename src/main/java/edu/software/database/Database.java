@@ -5,7 +5,7 @@ import edu.software.order.Order;
 import edu.software.record.Barber;
 import edu.software.record.Record;
 import edu.software.record.User;
-import edu.software.updater.Update;
+import edu.software.record.Receiver;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Singleton
-public class Database implements Update {
+public class Database implements Receiver {
     private static Database database;
     private Connection connection;
 
@@ -76,6 +76,18 @@ public class Database implements Update {
         }
     }
 
+    public void deleteRecord(Record record) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("DELETE FROM records WHERE record_id = %d", record.id())
+            );
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public List<Barber> getBarberList() {
         List<Barber> barberList = new ArrayList<>();
 
@@ -96,23 +108,19 @@ public class Database implements Update {
         return barberList;
     }
 
-    public List<Record> getRecordList(User user) {
+    public List<Record> getRecordList(ResultSet set) {
         List<Record> recordList = new ArrayList<>();
 
         try {
-            PreparedStatement statement = connection.prepareStatement(
-                    String.format("SELECT * FROM records WHERE user_id = '%s'", user.id())
-            );
-            ResultSet set = statement.executeQuery();
             while (set.next()) {
                 recordList.add(
-                    new Record(
-                            set.getInt(1),
-                            user,
-                            getBarber(set.getInt(1)),
-                            new BaseOrder(set.getString(4), set.getFloat(5)),
-                            set.getTimestamp(6)
-                    )
+                        new Record(
+                                set.getInt(1),
+                                getUser(set.getInt(2)),
+                                getBarber(set.getInt(3)),
+                                new BaseOrder(set.getString(4), set.getFloat(5)),
+                                set.getTimestamp(6)
+                        )
                 );
             }
         } catch (SQLException e) {
@@ -122,10 +130,34 @@ public class Database implements Update {
         return recordList;
     }
 
-    public Barber getBarber(int record_id) {
+    public List<Record> getRecordList(User user) {
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    String.format("SELECT * FROM barbers b JOIN records r USING(barber_id) WHERE r.record_id = %d", record_id)
+                    String.format("SELECT * FROM records WHERE user_id = '%s'", user.id())
+            );
+            return getRecordList(statement.executeQuery());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Record> getRecordList(Barber barber) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT * FROM records WHERE barber_id = '%s'", barber.id())
+            );
+            return getRecordList(statement.executeQuery());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    public Barber getBarber(int barber_id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT * FROM barbers WHERE barber_id = %d", barber_id)
             );
             ResultSet set = statement.executeQuery();
             if (set.next()) {
@@ -141,16 +173,44 @@ public class Database implements Update {
         return null;
     }
 
+    public User getUser(int user_id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    String.format("SELECT * FROM users WHERE user_id = %d", user_id)
+            );
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return new User(
+                        set.getInt(1),
+                        set.getString(2),
+                        set.getString(3),
+                        set.getString(4)
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+
+    }
+
+    public int getLastId(ResultSet set) {
+        try {
+            if (set.next()) {
+                return set.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+
     public int getLastUserId() {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1"
             );
-            ResultSet set = statement.executeQuery();
-
-            if (set.next()) {
-                return set.getInt(1);
-            }
+            return getLastId(statement.executeQuery());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -162,15 +222,10 @@ public class Database implements Update {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT record_id FROM records ORDER BY record_id DESC LIMIT 1"
             );
-            ResultSet set = statement.executeQuery();
-
-            if (set.next()) {
-                return set.getInt(1);
-            }
+            return getLastId(statement.executeQuery());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return 0;
     }
 
@@ -283,53 +338,9 @@ public class Database implements Update {
         return timeList;
     }
 
+
     @Override
-    public void update(Object... args) {
-        Record record = (Record) args[0];
+    public void update(Record record) {
 
-        for (Object obj : args) {
-            try {
-                switch (obj.getClass().getName()) {
-                    case "Barber": {
-                        Barber barber = (Barber) obj;
-
-                        String query = String.format("UPDATE records SET barber_id=%d WHERE record_id=%d",
-                                barber.id(),
-                                record.id()
-                        );
-
-                        PreparedStatement statement = connection.prepareStatement(query);
-                        statement.execute();
-                        break;
-                    }
-                    case "Order": {
-                        Order order = (Order) obj;
-
-                        String query = String.format("UPDATE records SET order_description='%s' WHERE record_id=%d",
-                                order.description(),
-                                record.id()
-                        );
-
-                        PreparedStatement statement = connection.prepareStatement(query);
-                        statement.execute();
-                        break;
-                    }
-                    case "Date": {
-                        Date date = (Date) obj;
-
-                        String query = String.format("UPDATE records SET date='%s' WHERE record_id=%d",
-                                date,
-                                record.id()
-                        );
-
-                        PreparedStatement statement = connection.prepareStatement(query);
-                        statement.execute();
-                        break;
-                    }
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 }

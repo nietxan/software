@@ -29,19 +29,23 @@ public class BarberAuth {
 
     @FXML
     private void singIn(ActionEvent event) throws IOException {
-
         switch (database.checkBarber(barber_name.getText(), password.getText())) {
             case 0: {
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
+                Stage stage = new Stage();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("barber_page.fxml"));
                 Parent parent = loader.load();
+
                 BarberPage page = loader.getController();
                 page.initialize(database.getBarber(barber_name.getText()));
 
-                Scene scene = new Scene(parent);
-                stage.setScene(scene);
+                stage.setScene(new Scene(parent));
+                stage.setTitle("Barber Page");
                 stage.show();
+
+                Stage current = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+                current.setScene(new Scene(loader.load()));
+                current.show();
                 break;
             }
 

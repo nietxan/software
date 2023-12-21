@@ -29,18 +29,20 @@ import java.util.List;
 public class AddRecord {
     Database database = Database.getDatabase();
 
-    private User user;
-    private Barber barber;
-    private Order order;
-    private Timestamp date;
+    protected User user;
+
+    protected Barber barber;
+
+    protected Order order;
+
+    protected Timestamp date;
 
     public void initialize(User user) {
         this.user = user;
     }
 
-
     @FXML
-    private DatePicker date_picker;
+    protected DatePicker date_picker;
 
     @FXML
     private void pickTime() {
@@ -84,7 +86,7 @@ public class AddRecord {
     }
 
     @FXML
-    private Button barber_choice;
+    protected Button barber_choice;
 
     @FXML
     private void barberChoose() {
@@ -121,6 +123,16 @@ public class AddRecord {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("make_order.fxml"));
         Parent parent = loader.load();
 
+        if (order != null) {
+            TextField textField = (TextField) parent.lookup("#description");
+
+            String s = order.description();
+            for (int i = 0; i < s.length(); i++) if (s.charAt(i) == '+') {
+                s = s.substring(0, i);
+            }
+            textField.setText(s);
+        }
+
         Button confirm = (Button) parent.lookup("#confirm");
         confirm.setOnAction(event -> {
             Order order = new BaseOrder(((TextField) parent.lookup("#description")).getText(), 200f);
@@ -153,7 +165,7 @@ public class AddRecord {
     }
 
     @FXML
-    private void confirm(ActionEvent event) throws IOException {
+    protected void confirm(ActionEvent event) throws IOException {
         Record record = new Record(
                 database.getLastRecordId() + 1,
                 this.user,
@@ -165,13 +177,16 @@ public class AddRecord {
         database.insertRecord(record);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("user_page.fxml"));
+        Parent parent = loader.load();
+        UserPage userPage = loader.getController();
+        userPage.initialize(this.user);
+        stage.setScene(new Scene(parent));
+        stage.show();
     }
 
     @FXML
-    private void home(ActionEvent event) throws IOException {
+    protected void home(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
