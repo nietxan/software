@@ -39,7 +39,7 @@ public class BarberAuth {
                 page.initialize(database.getBarber(barber_name.getText()));
 
                 stage.setScene(new Scene(parent));
-                stage.setTitle("Barber Page");
+                stage.setTitle(String.format("%s Page", barber_name.getText()));
                 stage.show();
 
                 Stage current = (Stage) ((Node) event.getSource()).getScene().getWindow();

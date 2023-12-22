@@ -21,10 +21,18 @@ public class BarberPage implements Receiver {
 
     Database database = Database.getDatabase();
 
+    private Barber barber;
+
     public void initialize(Barber barber) {
         ObservableList<Record> list = FXCollections.observableList(database.getRecordList(barber));
 
         records.setItems(list);
+
+        this.barber = barber;
+    }
+
+    public Barber getBarber() {
+        return barber;
     }
 
     @FXML

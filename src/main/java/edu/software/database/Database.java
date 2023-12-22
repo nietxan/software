@@ -76,18 +76,6 @@ public class Database implements Receiver {
         }
     }
 
-    public void deleteRecord(Record record) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(
-                    String.format("DELETE FROM records WHERE record_id = %d", record.id())
-            );
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public List<Barber> getBarberList() {
         List<Barber> barberList = new ArrayList<>();
 

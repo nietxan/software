@@ -40,6 +40,7 @@ public class UpdateRecord extends AddRecord {
 
         super.initialize(user);
 
+        this.user = user;
         this.record = record;
     }
 
@@ -48,22 +49,25 @@ public class UpdateRecord extends AddRecord {
 
         receiverList.add(database);
 
-        Stage barberPage = new Stage();
+        Stage stage = new Stage();
 
-        for (Window window : Stage.getWindows()) if (window instanceof Stage stage) {
-            if (stage.getTitle().equals("Barber Page")) {
-                barberPage = stage;
+        List<Stage> toHide = new ArrayList<>();
+
+        for (Window window : Stage.getWindows()) {
+            if (window instanceof Stage loaded && loaded.getTitle().equals(String.format("%s Page", this.record.barber().name()))) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("barber_page.fxml"));
+
+                stage.setScene(new Scene(loader.load()));
+                BarberPage page = loader.getController();
+
+                receiverList.add(page);
+                toHide.add(loaded);
             }
         }
 
-        barberPage.hide();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("barber_page.fxml"));
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
-        BarberPage page = loader.getController();
-        receiverList.add(page);
+        for (Stage loaded : toHide) {
+            loaded.hide();
+        }
 
         Record record = new Record(
                 this.record.id(),
@@ -77,11 +81,13 @@ public class UpdateRecord extends AddRecord {
             receiver.update(record);
         }
 
-        stage.setTitle("Barber Page");
-        stage.show();
+        if (stage.getScene() != null) {
+            stage.setTitle(String.format("%s Page", record.barber().name()));
+            stage.show();
+        }
 
         Stage current = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("user_page.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("user_page.fxml"));
         Parent parent = loader.load();
         UserPage userPage = loader.getController();
         userPage.initialize(super.user);
