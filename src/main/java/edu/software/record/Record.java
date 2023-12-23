@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 public record Record(Integer id, User user, Barber barber, Order order, Timestamp date) {
 
@@ -65,18 +64,5 @@ public record Record(Integer id, User user, Barber barber, Order order, Timestam
                 order.description() + ' ' +
                 order.cost() + ' ' +
                 date;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Record record = (Record) o;
-        return Objects.equals(id, record.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
