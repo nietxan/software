@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -40,7 +41,12 @@ public class AddUser {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("user_page.fxml"));
-        Scene scene = new Scene(loader.load());
+
+        Parent root = loader.load();
+        UserPage userPage = loader.getController();
+        userPage.initialize(database.getUser(username.getText()));
+
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
