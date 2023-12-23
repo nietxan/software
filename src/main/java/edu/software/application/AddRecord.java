@@ -178,9 +178,11 @@ public class AddRecord {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("user_page.fxml"));
+
         Parent parent = loader.load();
         UserPage userPage = loader.getController();
         userPage.initialize(this.user);
+
         stage.setScene(new Scene(parent));
         stage.show();
     }
